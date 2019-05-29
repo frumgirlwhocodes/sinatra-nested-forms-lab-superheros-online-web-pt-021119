@@ -10,7 +10,11 @@ class App < Sinatra::Base
  
  
  post "/teams"  do 
-   @team=Team.new(params[:])
+ @team = Team.new(name: params[:team][:name], motto: params[:team][:motto])
+      members = params[:team][:members]
+      @members = members.collect do |member_params|
+        Member.new({name: member_params[:name], power: member_params[:power], biography: member_params[:biography]})
+      end
    
    erb :team
  end 
